@@ -1,9 +1,7 @@
 import { makeCompletion } from '../src/openai'
 import { getOptionMessages } from '../src/prompt'
 
-export const config = {
-  runtime: 'edge'  
-}
+export const config = { runtime: 'edge' }
 
 export default async function handler (req) {
   const { searchParams } = new URL(req.url)
