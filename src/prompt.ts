@@ -1,4 +1,4 @@
-export const getOptionMessages = word => ([
+export const getOptionMessages = (word: string) => ([
   {"role": "system","content": "You are an API server, you will generate JSON responses to requests."},
   {
     "role": "user",

@@ -1,17 +1,17 @@
 export async function makeCompletion (messages) {
-  const url = 'https://api.openai.com/v1/chat/completions';
+  const url = 'https://api.openai.com/v1/chat/completions'
   
   const requestOptions = {
-    'method': 'POST',
-    'headers': {
+    method: 'POST',
+    headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
     },
-    'body': JSON.stringify({
+    body: JSON.stringify({
       model: 'gpt-3.5-turbo',
       temperature: 1,
       messages,
-    }),
+    })
   }
 
   const response = await fetch(url, requestOptions)
