@@ -15,7 +15,7 @@ export default async function handler (req) {
     ? getQuestionSimpleMessages(word)
     : getQuestionMessages(word)
 
-  const completion = await makeCompletion(messages)
+  const completion = await makeCompletion(messages, true)
   return new Response(
     JSON.stringify(completion),
     {
