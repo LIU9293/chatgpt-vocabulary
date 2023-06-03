@@ -6,7 +6,7 @@ export const config = { runtime: 'edge' }
 export default async function handler (req) {
   const { searchParams } = new URL(req.url)
   const word = searchParams.get('word')
-
+ 
   if (!word) return new Response('Missing word', { status: 400 })
   
   const messages = getOptionMessages(word)
