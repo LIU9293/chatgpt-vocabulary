@@ -1,5 +1,5 @@
 import { makeCompletionStream } from '../src/openai'
-import { getSuggestionMessage } from '../src/prompt'
+import { getFeedbackMessages } from '../src/prompt'
 
 export const config = { runtime: 'edge' }
 
@@ -9,7 +9,7 @@ export default async function handler (req) {
 
   if (!words) return new Response('Missing words', { status: 400 })
   
-  const messages = getSuggestionMessage(words)
+  const messages = getFeedbackMessages(words)
   const res = await makeCompletionStream(messages)
 
   if (res.status === 401) {

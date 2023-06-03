@@ -7,3 +7,6 @@
 
 * Query word question -> https://chatgpt-english.vercel.app/api/question?word=dictionary
 * Get word options -> https://chatgpt-english.vercel.app/api/feedback?words=dictionary,stream
+
+
+-> https://github.com/liu9293/chatgpt-vocabulary

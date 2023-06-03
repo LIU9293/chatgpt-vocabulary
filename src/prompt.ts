@@ -1,4 +1,4 @@
-export const getOptionMessages = (word: string) => ([
+export const getQuestionMessages = (word: string) => ([
   {
     "role": "system",
     "content": "You are an API server, you will generate JSON responses to requests."
@@ -29,8 +29,32 @@ export const getOptionMessages = (word: string) => ([
   }
 ])
 
+export const getQuestionSimpleMessages = (word: string) => ([
+  {
+    "role": "system",
+    "content": "You are an API server, you will generate JSON responses to requests."
+  },
+  {
+    "role": "user",
+    "content": `
+    You are a vocabulary tester, for the given English word, you give back 4 different Chinese meanings. Only one meaning is correct and the other 3 meanings are used to confuse user and cannot be translated into the word.
+    
+    {
+      options: [
+        { translate: "椅子", correct: false },
+        { translate: "门", correct: true },
+        ...
+      ]
+    }
+
+    The word is "${word}"
+    `
+  }
+])
+
+
 // we don't use this as an API endpoint, but just show in result in the frontend
-export const getSuggestionMessage = (words: string) => ([
+export const getFeedbackMessages = (words: string) => ([
   {
     "role": "system",
     "content": "You are a helpful assistant."
