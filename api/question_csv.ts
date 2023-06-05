@@ -13,9 +13,10 @@ export default async function handler (req) {
   
   const messages = getQuestionCsvMessages(word)
   const completion = await makeCompletion(messages)
+
   const options = completion.split(',')
-  
   const correctIndex = parseInt(options.at(-1))
+  
   const response = {
     options: options.slice(0, 4).map((option, index) => ({
       translate: option.trim(),

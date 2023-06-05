@@ -57,14 +57,14 @@ export const getQuestionSimpleMessages = (word: string) => ([
 export const getQuestionCsvMessages = (word: string) => ([
   {
     "role": "system",
-    "content": "You are an backend server, you will generate csv data to user, do not mix with anything else just the csv data."
+    "content": "You are an csv data generate, do not send anything other than the csv data."
   },
   {
     "role": "user",
     "content": `
-    You are a vocabulary tester, for the given English word, you give back 4 different Chinese meanings and the index of the correct one. The index begin at 0, only one meaning is correct and the other 3 meanings are used to confuse the user and cannot be translated into the word.
+    You are a vocabulary tester, for the given English word, you give back 4 different Chinese meanings and the index of the correct one in csv format. The index begin at 0, only one meaning is correct and the other 3 meanings are used to confuse the user and cannot be translated into the word. Do not send anything other than the csv data.
     
-    The example output is like: 车库,字典,画廊,图书馆,0
+    The example output is: 车库, 字典, 画廊, 图书馆, 0
 
     The word is "${word}"
     `
