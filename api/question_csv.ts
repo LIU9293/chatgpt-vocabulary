@@ -18,7 +18,7 @@ export default async function handler (req) {
   const correctIndex = parseInt(options.at(-1))
   const response = {
     options: options.slice(0, 4).map((option, index) => ({
-      option: option.trim(),
+      translate: option.trim(),
       correct: index === correctIndex,
     }))
   }
