@@ -79,7 +79,7 @@ export const getExplainMessages = (word: string) => ([
   {
     "role": "user",
     "content": `
-    I will give you one English word and you give me the meanings of the word both in Chinese and English, together with two example sentences. If the word has more than one meaning, you can give me all of them.
+    I will give you one English word and you give me the meanings of the word both in Simplify Chinese and English, together with two example sentences. If the word has more than one meaning, you can give me all of them.
     
     The message format is like:
   
