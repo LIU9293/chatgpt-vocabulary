@@ -54,6 +54,44 @@ export const getQuestionSimpleMessages = (word: string) => ([
   }
 ])
 
+export const getQuestionCsvMessages = (word: string) => ([
+  {
+    "role": "system",
+    "content": "You are an backend server, you will generate csv data to user, do not mix with anything else just the csv data."
+  },
+  {
+    "role": "user",
+    "content": `
+    You are a vocabulary tester, for the given English word, you give back 4 different Chinese meanings and the index of the correct one. The index begin at 0, only one meaning is correct and the other 3 meanings are used to confuse the user and cannot be translated into the word.
+    
+    The example output is like: 车库,字典,画廊,图书馆,0
+
+    The word is "${word}"
+    `
+  }
+])
+
+export const getExplainMessages = (word: string) => ([
+  {
+    "role": "system",
+    "content": "You are a helpful assistant."
+  },
+  {
+    "role": "user",
+    "content": `
+    I will give you one English word and you give me the meanings of the word both in Chinese and English, together with two example sentences. If the word has more than one meaning, you can give me all of them.
+    
+    The message format is like:
+  
+    English meaning: ...
+    中文意思: ...
+
+    Examples: ...
+
+    The word is ${word}
+    `
+  }
+])
 
 // we don't use this as an API endpoint, but just show in result in the frontend
 export const getFeedbackMessages = (words: string) => ([
