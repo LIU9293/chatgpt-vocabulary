@@ -12,10 +12,9 @@ const getMessages = (question: string, context: string) => ([
   },
   {
     "role": "user",
-    "content": `Use following information as context to answer the question, answer in Simplified Chinese.
+    "content": `Use following information as context to answer user question, answer in Simplified Chinese.
     
-    User question is:
-    ${question}
+    User question is: ${question}
 
     Context is:
     ${context}
@@ -45,10 +44,26 @@ export default async function handler (req) {
   const context = await vectorStore.similaritySearch(question, 1)
   const contextString = context[0].pageContent
   const messages = getMessages(question, contextString)
-  const completion = isStream
-    ? await makeCompletionStream(messages)
-    : await makeCompletion(messages)
 
+  if (isStream) {
+    const res = await makeCompletionStream(messages)
+
+    if (res.status === 401) {
+      // to prevent browser prompt for credentials
+      const newHeaders = new Headers(res.headers)
+      newHeaders.delete("www-authenticate")
+
+      return new Response(res.body, {
+        status: res.status,
+        statusText: res.statusText,
+        headers: newHeaders,
+      })
+    }
+    
+    return res
+  }
+
+  const completion = makeCompletion(messages)
   return new Response(
     JSON.stringify(completion),
     {
