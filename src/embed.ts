@@ -4,15 +4,15 @@ import { SupabaseVectorStore } from "langchain/vectorstores/supabase"
 import { OpenAIEmbeddings } from "langchain/embeddings/openai"
 import { CharacterTextSplitter } from "langchain/text_splitter"
 import { GitbookLoader } from "langchain/document_loaders/web/gitbook"
-import { text1, text2 } from './txt/text'
+import { text1, text2, text3 } from './txt/text'
 
 const privateKey = process.env.SUPABASE_API_KEY
 const supabaseUrl = 'https://pbwomhaljetjeocbllit.supabase.co'
 if (!privateKey) throw new Error(`Expected env var SUPABASE_PRIVATE_KEY`);
 
 const splitter = new CharacterTextSplitter({
-  chunkSize: 500,
-  chunkOverlap: 100
+  chunkSize: 600,
+  chunkOverlap: 50
 })
 
 const embed = async () => {
@@ -24,7 +24,7 @@ const embed = async () => {
       shouldLoadAllPaths: true
     })
   
-    const textDocs = await splitter.createDocuments([text1, text2])
+    const textDocs = await splitter.createDocuments([text1, text2, text3])
     const gitbookDocs = await gitbookLoader.loadAndSplit(splitter)
     const allDocs = [...gitbookDocs, ...textDocs]  
     
