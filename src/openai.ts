@@ -58,22 +58,4 @@ export async function makeCompletionStream (
   }
 
   return await fetch(fetchUrl, fetchOptions)
-  // try {
-  //   const res = await fetch(fetchUrl, fetchOptions)
-
-  //   if (res.status === 401) {
-  //     // to prevent browser prompt for credentials
-  //     const newHeaders = new Headers(res.headers)
-  //     newHeaders.delete("www-authenticate")
-  //     return new Response(res.body, {
-  //       status: res.status,
-  //       statusText: res.statusText,
-  //       headers: newHeaders,
-  //     })
-  //   }
-
-  //   return res
-  // } finally {
-  //   clearTimeout(timeoutId)
-  // }
 }

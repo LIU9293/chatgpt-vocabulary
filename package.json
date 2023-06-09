@@ -5,7 +5,13 @@
   "author": "Kai",
   "dependencies": {
     "@fortaine/fetch-event-source": "^3.0.6",
+    "@supabase/supabase-js": "^2.24.0",
     "@vercel/node": "^2.14.3",
+    "cheerio": "^1.0.0-rc.12",
+    "cheminfo-types": "^1.7.2",
+    "dotenv": "^16.1.4",
+    "langchain": "^0.0.92",
+    "redis": "^4.6.7",
     "typescript": "^5.0.4"
   }
 }
