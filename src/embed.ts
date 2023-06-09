@@ -11,8 +11,8 @@ const supabaseUrl = 'https://pbwomhaljetjeocbllit.supabase.co'
 if (!privateKey) throw new Error(`Expected env var SUPABASE_PRIVATE_KEY`);
 
 const splitter = new CharacterTextSplitter({
-  chunkSize: 600,
-  chunkOverlap: 50
+  chunkSize: 900,
+  chunkOverlap: 100
 })
 
 const embed = async () => {
@@ -26,7 +26,7 @@ const embed = async () => {
   
     const textDocs = await splitter.createDocuments([text1, text2, text3])
     const gitbookDocs = await gitbookLoader.loadAndSplit(splitter)
-    const allDocs = [...gitbookDocs, ...textDocs]  
+    const allDocs = [...textDocs, ...gitbookDocs]  
     
     // Load the docs into the vector store
     const vectorStore = await SupabaseVectorStore.fromDocuments(

@@ -8,16 +8,18 @@ export const config = { runtime: 'edge' }
 const getMessages = (question: string, context: string) => ([
   {
     "role": "system",
-    "content": "You are a AI custmer helper, please answer the question based on providing information."
+    "content": "你是一个AI助手，你需要根据用户的提问以及提供的背景信息来回答用户的问题，请用中文做出回应并尽可能提供有用的信息，如果你没有答案，请说我不知道，并让用户去蘑菇自习室小程序中查看"
   },
   {
     "role": "user",
-    "content": `Use following information as context to answer user question, answer in Simplified Chinese.
-    
-    User question is: ${question}
+    "content": `
+    背景信息
+      '''
+      ${context}
+      '''
 
-    Context is:
-    ${context}
+    问题或咨询
+      ${question}
     `
   }
 ])
@@ -41,8 +43,9 @@ export default async function handler (req) {
     { client, tableName: "documents" }
   )
 
-  const context = await vectorStore.similaritySearch(question, 1)
-  const contextString = context[0].pageContent
+  const context = await vectorStore.similaritySearch(question, 2)
+  const contextString = context[0].pageContent + context[1].pageContent
+
   const messages = getMessages(question, contextString)
 
   if (isStream) {
