@@ -63,7 +63,7 @@ export default async function handler (req) {
     return res
   }
 
-  const completion = makeCompletion(messages)
+  const completion = await makeCompletion(messages)
   return new Response(
     JSON.stringify(completion),
     {
