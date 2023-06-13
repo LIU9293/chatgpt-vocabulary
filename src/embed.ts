@@ -1,17 +1,17 @@
 import 'dotenv/config'
-import { createClient } from "@supabase/supabase-js"
-import { SupabaseVectorStore } from "langchain/vectorstores/supabase"
-import { OpenAIEmbeddings } from "langchain/embeddings/openai"
-import { CharacterTextSplitter } from "langchain/text_splitter"
-import { GitbookLoader } from "langchain/document_loaders/web/gitbook"
-import { text1, text2, text3 } from './txt/text'
+import { createClient } from '@supabase/supabase-js'
+import { SupabaseVectorStore } from 'langchain/vectorstores/supabase'
+import { OpenAIEmbeddings } from 'langchain/embeddings/openai'
+import { CharacterTextSplitter } from 'langchain/text_splitter'
+import { GitbookLoader } from 'langchain/document_loaders/web/gitbook'
+import { text1, text2, text3, text4 } from './txt/text'
 
 const privateKey = process.env.SUPABASE_API_KEY
 const supabaseUrl = 'https://pbwomhaljetjeocbllit.supabase.co'
 if (!privateKey) throw new Error(`Expected env var SUPABASE_PRIVATE_KEY`);
 
 const splitter = new CharacterTextSplitter({
-  chunkSize: 900,
+  chunkSize: 1000,
   chunkOverlap: 100
 })
 
@@ -20,16 +20,16 @@ const embed = async () => {
 
     const client = createClient(supabaseUrl, privateKey)
 
-    const gitbookLoader = new GitbookLoader("https://docs.mogroom.com", {
+    const gitbookLoader = new GitbookLoader('https://docs.mogroom.com', {
       shouldLoadAllPaths: true
     })
   
-    const textDocs = await splitter.createDocuments([text1, text2, text3])
+    const textDocs = await splitter.createDocuments([text1, text2, text3, text4])
     const gitbookDocs = await gitbookLoader.loadAndSplit(splitter)
     const allDocs = [...textDocs, ...gitbookDocs]  
     
     // Load the docs into the vector store
-    const vectorStore = await SupabaseVectorStore.fromDocuments(
+    await SupabaseVectorStore.fromDocuments(
       allDocs,
       new OpenAIEmbeddings({ openAIApiKey: process.env.OPENAI_API_KEY }),
       { client }

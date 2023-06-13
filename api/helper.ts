@@ -28,7 +28,9 @@ export default async function handler (req) {
 
   const privateKey = process.env.SUPABASE_API_KEY || ''
   const supabaseUrl = 'https://pbwomhaljetjeocbllit.supabase.co'
-  const client = createClient(supabaseUrl, privateKey)
+  const client = createClient(supabaseUrl, privateKey, {
+    auth: { persistSession: false }
+  })
 
   const { searchParams } = new URL(req.url)
   const question = searchParams.get('question') 

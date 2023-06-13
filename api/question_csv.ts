@@ -6,9 +6,6 @@ export const config = { runtime: 'edge' }
 export default async function handler (req) {
   const { searchParams } = new URL(req.url)
   const word = searchParams.get('word')
-  // const simple = searchParams.get('simple')
-  // const isSimple = simple === 'true' || simple === '1'
- 
   if (!word) return new Response('Missing word', { status: 400 })
   
   const messages = getQuestionCsvMessages(word)
