@@ -9,7 +9,7 @@ export interface OpenAIFunction {
   parameters: {
     type: string,
     properties: any,
-    required: string[]
+    required?: string[]
   }
 }
 
@@ -98,6 +98,10 @@ export async function callGptFunction (
 
   const response = await fetch(url, requestOptions)
   const json = await response.json()
+
+  if (!json.choices) {
+    throw new Error(json?.error?.message || 'GPT response error')
+  }
 
   if (json.choices[0]?.message?.content) {
     return {
