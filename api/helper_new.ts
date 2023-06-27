@@ -1,5 +1,6 @@
 import { callGptFunction, makeCompletion, FunctionCallResponse } from '../src/openai'
-import { askCustomerServiceMessages } from '../src/messages'
+import { querySimiliarDocuments } from '../src/embed/pinecone'
+import { getMessages } from '../src/messages'
 
 export const config = { runtime: 'edge' }
 
@@ -43,11 +44,14 @@ export default async function handler (req) {
     }
   ]
 
-
   try {
     let response: FunctionCallResponse = await callGptFunction(messages, functions)
     if (!response.isFunction) {
-      const newMessages = await askCustomerServiceMessages(question)
+
+      const docs = await querySimiliarDocuments('mogroom', 'mogroom-user', question)
+      const contextString = docs[0].pageContent + '\n' + docs[1].pageContent
+      const newMessages = getMessages(question, contextString)
+
       const text = await makeCompletion(newMessages)
       response ={ content: text, isFunction: false, functionCall: null }
     }

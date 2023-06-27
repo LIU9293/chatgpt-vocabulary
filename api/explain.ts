@@ -10,7 +10,6 @@ export default async function handler (req) {
   
   const messages = getExplainMessages(word)
   const res = await makeCompletionStream(messages)
-
   if (res.status === 401) {
     // to prevent browser prompt for credentials
     const newHeaders = new Headers(res.headers)

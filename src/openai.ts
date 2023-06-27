@@ -16,29 +16,33 @@ export interface OpenAIFunction {
 export async function makeCompletion (
   messages: OpenAIMessage[],
   decodeJSON = false
-) {
-  
-  const url = 'https://api.openai.com/v1/chat/completions'
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
-    },
-    body: JSON.stringify({
-      model: 'gpt-3.5-turbo-0613',
-      messages,
-    })
-  }
+) : Promise<string> {
+  try {
+    const url = 'https://api.openai.com/v1/chat/completions'
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: 'gpt-3.5-turbo-0613',
+        messages,
+      })
+    }
 
-  const response = await fetch(url, requestOptions)
-  const json = await response.json()
-  if (!decodeJSON) {
-    return json.choices[0].message?.content
+    const response = await fetch(url, requestOptions)
+    const json = await response.json()
+    if (!decodeJSON) {
+      return json.choices[0].message?.content
+    }
+    
+    const content = JSON.parse(json.choices[0].message?.content || "{}")
+    return content
+  } catch (error) {
+    console.error(error)
+    return 'openai API错误，请稍后重试'
   }
-  
-  const content = JSON.parse(json.choices[0].message?.content || "{}")
-  return content
 }
 
 export async function makeCompletionStream (

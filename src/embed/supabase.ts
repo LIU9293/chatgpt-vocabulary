@@ -4,10 +4,12 @@ import { SupabaseVectorStore } from 'langchain/vectorstores/supabase'
 import { OpenAIEmbeddings } from 'langchain/embeddings/openai'
 import { CharacterTextSplitter } from 'langchain/text_splitter'
 import { GitbookLoader } from 'langchain/document_loaders/web/gitbook'
-import { text1, text2, text3, text4 } from './txt/text'
+import { text1, text2, text3, text4 } from '../../data/test'
 
 const privateKey = process.env.SUPABASE_API_KEY
-const supabaseUrl = 'https://pbwomhaljetjeocbllit.supabase.co'
+const supabaseUrl = process.env.SUPABASE_URL
+
+if (!supabaseUrl) throw new Error(`Expected env var SUPABASE_URL`)
 if (!privateKey) throw new Error(`Expected env var SUPABASE_PRIVATE_KEY`);
 
 const splitter = new CharacterTextSplitter({
@@ -17,9 +19,7 @@ const splitter = new CharacterTextSplitter({
 
 const embed = async () => {
   try {
-
     const client = createClient(supabaseUrl, privateKey)
-
     const gitbookLoader = new GitbookLoader('https://docs.mogroom.com', {
       shouldLoadAllPaths: true
     })
