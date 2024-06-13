@@ -1,6 +1,6 @@
 import { querySimiliarDocuments } from "../src/embed/pinecone";
 
-export const config = { runtime: "edge" };
+export const config = { runtime: "nodejs" };
 
 export default async function handler(req) {
   const { searchParams } = new URL(req.url);
